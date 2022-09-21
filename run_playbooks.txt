@@ -1,0 +1,8 @@
+Update host file
+
+Verify Ansible connectivity
+ansible-playbook -i hosts.ini ping_vms.yml -l vagrant
+ansible-playbook -i hosts.ini ping_vms.yml
+
+Run playbook against Vagrant host
+ansible-playbook -i hosts.ini playbook.yml

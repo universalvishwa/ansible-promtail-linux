@@ -1,0 +1,24 @@
+---
+- name: Install and Configure promtail
+  hosts: all
+  become: yes
+  roles:
+    - role: promtail
+      vars:
+        server:
+          http_listen_port: 9080
+          grpc_listen_port: 9095
+        clients:
+          url: "http://lokiuser:lokip@ssword!@192.168.0.133:80/loki/api/v1/push"
+          external_labels:
+            host: "{{ ansible_hostname }}"
+        positions:
+          filename: "/var/log/positions.yaml"
+        scrape_configs:
+          - job_name: system
+            static_configs:
+              - targets:
+                  - localhost
+                labels:
+                  job: varlogs
+                  __path__: /var/log/*.log

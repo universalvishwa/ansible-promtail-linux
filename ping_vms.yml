@@ -1,0 +1,7 @@
+---
+- name: Run ansible ping on Host
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ping hosts
+      ping: ~

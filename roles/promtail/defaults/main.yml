@@ -1,0 +1,60 @@
+---
+promtail_upgrade: False
+
+promtail_version: "2.6.0"
+promtail_dist_url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ go_arch }}.zip"
+promtail_apt_update_cache: True
+promtail_config_dir: /etc/promtail
+promtail_config_file: "{{ promtail_config_dir }}/promtail.yml"
+
+promtail_system_user: promtail
+promtail_system_group: promtail
+promtail_user_additional_groups: adm
+promtail_config_file_sd_dir: "{{ promtail_config_dir }}/file_sd"
+promtail_config_file: "{{ promtail_config_dir }}/promtail.yml"
+promtail_systemd_service: promtail
+
+promtail_install_dir: /opt/promtail
+promtail_tmp_dir: /tmp
+
+promtail_log_level: info
+# One of: debug, info, warn, error
+
+## Config file
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 9095
+
+loki_server_url: http://localhost:3100
+clients:
+  - url: "{{ loki_server_url }}/loki/api/v1/push"
+
+promtail_positions_directory: /var/log
+positions:
+  filename: "{{ promtail_positions_directory }}/positions.yml"
+
+scrape_configs:
+  - job_name: system
+    entry_parser: raw
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: varlogs
+        host: "{{ ansible_hostname }}"
+        __path__: /var/log/*log
+
+include_default_file_sd_config: False
+default_file_sd_config:
+  - job_name: file_sd
+    file_sd_configs:
+      - files:
+          - "{{ promtail_config_file_sd_dir }}/*.yml"
+          - "{{ promtail_config_file_sd_dir }}/*.yaml"
+          - "{{ promtail_config_file_sd_dir }}/*.json"
+
+target: {}
+
+# Loki configuration
+# loki_url: http://localhost:3100/loki/api/v1/push
+

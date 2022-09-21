@@ -1,0 +1,19 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=promtail
+After=network-online.target
+
+[Service]
+User={{ promtail_system_user }}
+Group={{ promtail_system_group }}
+WorkingDirectory={{ promtail_install_dir }}
+ExecStartPre=/bin/sleep 30
+ExecStart=/usr/local/bin/promtail -config.file={{ promtail_config_file }} -log.level={{ promtail_log_level }}
+SuccessExitStatus=143
+{# TimeoutStopSec=15 #}
+Restart=on-failure
+{# RestartSec=30 #}
+{# TimeoutSec=20 #}
+
+[Install]
+WantedBy=multi-user.target

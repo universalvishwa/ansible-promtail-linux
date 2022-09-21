@@ -1,0 +1,20 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 9095
+
+positions:
+  filename: /var/log/positions.yaml
+
+clients:
+  url: {{ loki_url }}/loki/api/v1/push
+  external_labels:
+    host: "{{ ansible_hostname }}"
+
+scrape_configs:
+  - job_name: system
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: varlogs
+        __path__: /var/log/*.log

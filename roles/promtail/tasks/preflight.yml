@@ -1,0 +1,25 @@
+---
+- name: Assert usage of systemd as an init system
+  assert:
+    that: ansible_service_mgr == 'systemd'
+    msg: "This module only works with systemd"
+
+- block:
+    - name: Determine latest GitHub release (local)
+      delegate_to: localhost
+      become: false
+      uri:
+        url: "https://api.github.com/repos/grafana/loki/releases/latest"
+        body_format: json
+      register: _github_release
+      until: _github_release.status == 200
+      retries: 5
+
+    - name: Set promtail version
+      set_fact:
+        promtail_version: "{{ _github_release.json.tag_name | regex_replace('^v?(.*)$', '\\1') }}"
+
+  when: (promtail_version is not defined) or (promtail_version == 'latest')
+  run_once: true
+
+- debug: var=promtail_version
