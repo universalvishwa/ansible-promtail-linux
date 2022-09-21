@@ -1,6 +1,6 @@
 # Ansible role for Promtail in Linux/Unix
 
-[![Ansible](https://img.shields.io/badge/ansible-6.4-EE0000?logo=ansible)](https://docs.ansible.com/) [![Molecule](https://img.shields.io/badge/molecule-v3.2-3CAFCE)](https://molecule.readthedocs.io/) [![License: Apache](https://img.shields.io/badge/License-Apache-yellow.svg)](https://github.com/universalvishwa/k3s-ansible/blob/master/LICENSE) [![Python](https://img.shields.io/badge/python-3.10-blue?logo=python)](https://www.python.org/downloads/release/python-379/)
+[![Ansible](https://img.shields.io/badge/ansible-6.4-EE0000?logo=ansible)](https://docs.ansible.com/) [![Molecule](https://img.shields.io/badge/molecule-v4.0-3CAFCE)](https://molecule.readthedocs.io/) [![License: Apache](https://img.shields.io/badge/License-Apache-yellow.svg)](https://github.com/universalvishwa/k3s-ansible/blob/master/LICENSE) [![Python](https://img.shields.io/badge/python-3.10-blue?logo=python)](https://www.python.org/downloads/release/python-379/)
 
 Ansible playbooks to configure Promtail monitoring agent with Grafana Loki logging service in Linux OS platform.
 
